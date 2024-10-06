@@ -1,28 +1,9 @@
-// You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
-//
-// Increment the large integer by one and return the resulting array of digits.
-const plusOneTestCases = [
-  {
-    input: [1,2,3],
-    want: 124,
-  },
-  {
-    input: [1,2,9],
-    want: 130,
-  },
-  {
-    input: [9],
-    want: 10,
-  },
-  {
-    input: [9,9],
-    want: 100,
-  },
-  {
-    input: [1,9],
-    want: 20,
-  }
-]
+/* You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's. Increment the large integer by one and return the resulting array of digits.
+
+Solution:
+*/
+
+import { test } from "./_test"
 
 function plusOne(input: number[]): number {
   let result = 0
@@ -49,10 +30,27 @@ function plusOne(input: number[]): number {
   return result
 }
 
-for (const testCase of plusOneTestCases) {
-  const got = plusOne(testCase.input)
-  const want = testCase.want
-  if (want !== got) {
-    throw new Error(`Got ${got} but wanted ${want} for ${testCase.input}`)
+const testCases = [
+  {
+    input: [[1,2,3]],
+    want: 124,
+  },
+  {
+    input: [[1,2,9]],
+    want: 130,
+  },
+  {
+    input: [[9]],
+    want: 10,
+  },
+  {
+    input: [[9,9]],
+    want: 100,
+  },
+  {
+    input: [[1,9]],
+    want: 20,
   }
-}
+]
+
+test(testCases, plusOne)

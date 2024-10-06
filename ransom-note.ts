@@ -1,4 +1,6 @@
-function ransomNoteBetterTime (s1: string, s2: string): boolean {
+import { test } from "./_test"
+
+function ransomNote (s1: string, s2: string): boolean {
 
   // Build a map that of char => # of occurrences
   const charMap = new Map()
@@ -26,23 +28,11 @@ function ransomNoteBetterTime (s1: string, s2: string): boolean {
   return false
 }
 
-type TestCase = {
-  want: boolean
-  input: [string, string]
-}
-
-const testCases: TestCase[] = [
+const testCases = [
   {
-    input: ['banana', 'aome sbnanp aancakes'],
+    input: [['banana', 'aome sbnanp aancakes']],
     want: true
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = ransomNoteBetterTime(...testCase.input)
-  if (got !== testCase.want) {
-    throw new Error(`Test case ${i} failed: Got ${got} but wanted ${testCase.want}`)
-  }
-}
-
-console.log('Passed!')
+test(testCases, ransomNote)
