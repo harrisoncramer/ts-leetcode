@@ -13,8 +13,8 @@ import { test } from "./_test"
 import { ListNode, makeList, makeSortedList } from "./_list"
 
 function returnMiddle (head: ListNode<number> | null): ListNode<number> | null {
-  let slow: ListNode<number> | null = head || null
-  let fast: ListNode<number> | null = head || null;
+  let slow: ListNode<number> | null = head;
+  let fast: ListNode<number> | null = head;
   while(fast && slow) {
     fast = fast.next
     if(!fast) return slow
@@ -48,7 +48,7 @@ const testCases = [
     }
   },
   {
-    input: [],
+    input: [null],
     want: null,
     compare: (got: null, want: null) => {
       return got === want

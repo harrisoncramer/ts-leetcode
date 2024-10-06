@@ -1,7 +1,9 @@
-const operators: string[] = ["/", "*", "+", "-"]
+import { test } from "./_test"
+
+const operatorsReattempt: string[] = ["/", "*", "+", "-"]
 
 function isOperator (s: string) {
-  return operators.includes(s) 
+  return operatorsReattempt.includes(s) 
 }
 
 function calculate (a: number, b: number, c: string): number {
@@ -9,56 +11,47 @@ function calculate (a: number, b: number, c: string): number {
   if(c === "*") return a * b
   if(c === "+") return a + b
   if(c === "-") return a - b
+
+  console.log("a, b, op", a, b, c);
   throw new Error("Invalid operator")
 }
 
 function reversePolish (tokens: string[]): number {
-  function helper () {
-    if(tokens.length === 1) return
-    let i = 0
-    while(!isOperator(tokens[i])) {
-      i++
-    }
-
-    const result = calculate(Number(tokens[i - 2]), Number(tokens[i - 1]), tokens[i])
-    // console.log(Number(tokens[i - 2]), Number(tokens[i - 1]), tokens[i]);
-    // console.log("Result is: ", result);
-    tokens.splice(i - 2, 3, String(result))
-    helper()
+  const stack: string[] = []
+  for(let i = 0; i < tokens.length; i++) {
+    let token = tokens[i]
+    if(isOperator(token)) {
+      const b = stack.pop()
+      const a = stack.pop()
+      const result = calculate(Number(a),Number(b),tokens[i])
+      stack.push(String(result))
+    } else stack.push(token)
   }
 
-  helper()
-
-  return Number(tokens[0])
+  return Number(stack.pop())
 }
 
-const reversePolishTestCases = [
+const testCases = [
   {
-    input: ["4", "13", "5", "/", "+"],
-    output: 6,
+    input: [["4", "13", "5", "/", "+"]],
+    want: 6,
   },
   {
-    input: ["2", "1", "+", "3", "*"],
-    output: 9,
+    input: [["2", "1", "+", "3", "*"]],
+    want: 9,
   },
   {
-    input: ["10","6","9","3","+","-11","*","/","*","17","+","5","+"],
-    output: 22,
+    input: [["10","6","9","3","+","-11","*","/","*","17","+","5","+"]],
+    want: 22,
   },
   {
-    input: ["8"],
-    output: 8,
+    input: [["8"]],
+    want: 8,
   },
   {
-    input: ["0","3","/"],
-    output: 0,
+    input: [["0","3","/"]],
+    want: 0,
   }
 ]
 
-for (const [i, testCase] of reversePolishTestCases.entries()) {
-  const result = reversePolish(testCase.input)
-  const want = testCase.output
-  if (result !== want) {
-    throw new Error(`Test case ${i} failed: Got ${result} but wanted ${want}`)
-  }
-}
+test(testCases, reversePolish)
