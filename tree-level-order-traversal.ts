@@ -11,9 +11,11 @@ E.g. for a tree with three levels, our result would have three arrays:
 [[1], [2,3], [4,5,7]]
 
 
-Solution: Write a breadth first traversal. However, rather than just dequeuing the values from the queue one at a time, we do it in "batches" where we dequeue all of the nodes from the same level at the same time. 
+Solution: Write a breadth first traversal. However, rather than just dequeuing the values from the queue one at a time and operating on their children, we do it in "batches" where we dequeue all of the nodes from the same level at the same time. 
 
-In order to do this, we save the initial size of our queue, and have a second loop inside of our while loop that empties out the queue. Inside of that inner loop, we remove each element from the queue and add it to a subresult, and it's children (if they exist) back into the queue. After the inner loop completes, we know our queue will have all of the children from the neext level in it. The queue will only be empty when there are no children in the next level.
+In order to do this, we save the initial size of our queue, and have a second loop inside of our while loop that empties out the queue. Inside of that inner loop, we remove each element from the queue and add it to a subresult, and it's children (if they exist) back into the queue. After the inner loop completes, we know our queue will have all of the children from the next level in it, and our sub-result will have all the children from the current level. 
+
+The queue will only end up being empty when there are no children in the next level, so we push no children back into it.
 
 */
 
