@@ -12,6 +12,7 @@ At the end, if any nodes remain in either list, tack them onto the end of the ta
 Return the headNode.next value that you started tacking things onto at the start
 */
 import { ListNode, makeSortedList } from "./_list"
+import { test } from "./_test"
 
 function mergeTwoLists (node1: ListNode<number> | null, node2: ListNode<number> | null) {
   let headNode = new ListNode<number>(0)
@@ -34,31 +35,14 @@ function mergeTwoLists (node1: ListNode<number> | null, node2: ListNode<number> 
   return headNode.next
 }
 
-type TestCase = {
-  node1: ListNode<number>
-  node2: ListNode<number>
-  want: number[]
-}
-
-const testCases: TestCase[] = [
+const testCases = [
   {
-    node1: makeSortedList(), // [1,2,3,4]
-    node2: makeSortedList(),
-    want: [1,1,2,2,3,3,4,4]
+    input: [makeSortedList(), makeSortedList()],
+    want: [1,1,2,2,3,3,4,4],
+    compare: (got: ListNode<number>, want: number[]) => {
+      return JSON.stringify(got.values()) === JSON.stringify(want)
+    }
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  let l = mergeTwoLists(testCase.node1, testCase.node2)
-  const got: number[] = []
-  while(l) {
-    got.push(l.val)
-    l = l.next
-  }
-  if (JSON.stringify(got) !== JSON.stringify(testCase.want)) {
-    throw new Error(`Test case ${i} failed: Got ${got} but wanted ${testCase.want}`);
-  }
-}
-
-
-
+test(testCases, mergeTwoLists)
