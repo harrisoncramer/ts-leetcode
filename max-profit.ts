@@ -4,6 +4,8 @@ Solution: This is a classic sliding window problem. Initialize two pointers sell
 
 */
 
+import { test } from "./_test"
+
 function maxProfit (stocks: number[]): number {
   if(stocks.length <= 1) return 0
   let profit = 0
@@ -31,45 +33,34 @@ function maxProfitKadaneAlgo (vals: number[]) {
 
 const testCases = [
   {
-    input: [9, 3, 1, 20, 6],
+    input: [[9, 3, 1, 20, 6]],
     want: 19
   },
   {
-    input: [7, 1, 5, 3, 6, 4],
+    input: [[7, 1, 5, 3, 6, 4]],
     want: 5
   },
   {
-    input: [7, 6, 4, 3, 1],
+    input: [[7, 6, 4, 3, 1]],
     want: 0
   },
   {
-    input: [1, 2, 3, 4, 5],
+    input: [[1, 2, 3, 4, 5]],
     want: 4
   },
   {
-    input: [1],
+    input: [[1]],
     want: 0
   },
   {
-    input: [],
+    input: [[]],
     want: 0
   },
   {
-    input: [9, 10, 8, 7, 6, 15, 1, 20],
+    input: [[9, 10, 8, 7, 6, 15, 1, 20]],
     want: 19
   }
 ];
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = maxProfit(testCase.input)
-  if (testCase.want !== got) {
-    throw new Error(`Test case ${i} errored: Got ${got} but wanted ${testCase.want}`);
-  }
-}
-
-for (const [i, testCase] of testCases.entries()) {
-  const got = maxProfitKadaneAlgo(testCase.input)
-  if (testCase.want !== got) {
-    throw new Error(`Test case ${i} errored: Got ${got} but wanted ${testCase.want}`);
-  }
-}
+test(testCases, maxProfit)
+test(testCases, maxProfitKadaneAlgo)

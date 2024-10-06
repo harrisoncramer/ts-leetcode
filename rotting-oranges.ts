@@ -84,5 +84,3 @@ const testCases = [
 ]
 
 test(testCases, orangesRottingReattempt)
-
-console.log("Success!")

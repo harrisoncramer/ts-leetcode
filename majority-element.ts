@@ -1,5 +1,7 @@
 /* Given an array nums of size n, return the majority element. You may assume that the majority element always exists in the array. */
 
+import { test } from "./_test"
+
 /*
  * Naive Approach
  * Time Complexity: O(n)
@@ -45,51 +47,29 @@ function majorityElementBest (nums: number[]): number {
   return majorityElement
 }
 
-type TestCase = {
-  input: number[]
-  want: number
-}
-
-const testCases: TestCase[] = [
+const testCases = [
   {
-    input: [3,2,3],
+    input: [[3,2,3]],
     want: 3
   },
   {
-    input: [3,3,3],
+    input: [[3,3,3]],
     want: 3
   },
   {
-    input: [2,2],
+    input: [[2,2]],
     want: 2
   },
   {
-    input: [1],
+    input: [[1]],
     want: 1
   },
   {
-    input: [3,3,4,4,5,5,5,5,5],
+    input: [[3,3,4,4,5,5,5,5,5]],
     want: 5
   },
 ]
 
-for(const [i, testCase] of testCases.entries()) {
-  const got = majorityElementBest(testCase.input)
-  if (testCase.want !== got) {
-    throw new Error(`Best: Got ${got} but wanted ${testCase.want}, for test ${i + 1}`)
-  }
-}
-
-for(const [i, testCase] of testCases.entries()) {
-  const got = majorityElementHash(testCase.input)
-  if (testCase.want !== got) {
-    throw new Error(`Hash: Got ${got} but wanted ${testCase.want}, for test ${i + 1}`)
-  }
-}
-
-for(const [i, testCase] of testCases.entries()) {
-  const got = majorityElementSort(testCase.input)
-  if (testCase.want !== got) {
-    throw new Error(`Hash: Got ${got} but wanted ${testCase.want}, for test ${i + 1}`)
-  }
-}
+test(testCases, majorityElementBest)
+test(testCases, majorityElementHash)
+test(testCases, majorityElementSort)
