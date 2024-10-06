@@ -1,6 +1,7 @@
 /* Given a tree, find the lowest common ancestor (LCA) node of two given nodes. The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).
 */
 
+import { test } from "./_test"
 import { makeLargeTree, TreeNode } from "./_tree"
 
 // This approach will two two DFS passes to find the ancestors of each node.
@@ -64,9 +65,4 @@ const testCases: TestCase[] = [
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = lowestCommonAncestorSinglePass(...testCase.input)
-  if (got !== testCase.want) {
-    throw new Error(`Test case ${i} failed: Got value ${got?.val} but wanted ${testCase.want.val}`)
-  }
-}
+test(testCases, lowestCommonAncestorSinglePass)
