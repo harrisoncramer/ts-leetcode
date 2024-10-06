@@ -1,38 +1,41 @@
+import { test } from "./_test";
+
 /* Write a function to find the longest common prefix string amongst an array of strings */
-// "house", "house", "house", "house", "house"
-const longestCommonTestCases = [
+const testCases = [
   {
-    input: ["care", "car"],
-    expected: "car",
+    input: [["care", "car"]],
+    want: "car",
   },
   {
-    input: ["splate", "splatter", "splam"],
-    expected: "spla",
+    input: [["splate", "splatter", "splam"]],
+    want: "spla",
   },
   {
-    input: ["", ""],
-    expected: "",
+    input: [["", ""]],
+    want: "",
   },
   {
-    input: ["aaa", ""],
-    expected: "",
+    input: [["aaa", ""]],
+    want: "",
   },
   {
-    input: ["aaa", "cbb"],
-    expected: "",
+    input: [["aaa", "cbb"]],
+    want: "",
   }
 ]
 
-function longestCommonPrefix (strs: string[]) {
+function longestCommon (strs: string[]): string {
   let resultString = ""
   let i = 0;
   while(true) {
-    let character = strs[0][i]
-    if(!character) return resultString
+    let char = strs[0][i]
+    if(char === "" || char === undefined) return resultString
     for(const str of strs) {
-      if(character !== str[i]) return resultString
+      if(str[i] !== char) return resultString
     }
-    resultString += character
+    resultString += char
     i++
   }
 }
+
+test(testCases, longestCommon)
