@@ -29,6 +29,23 @@ export function makeLargeTree(): TreeNode {
   return root;
 }
 
+export function makeUnbalancedBinaryTree(): TreeNode {
+  const root = new TreeNode(2);
+  root.right = new TreeNode(3);
+  root.right.right = new TreeNode(7)
+  root.right.right.right = new TreeNode(10);
+  return root;
+}
+
+export function makeSplitTree(): TreeNode {
+  const root = new TreeNode(1);
+  root.left = new TreeNode(2);
+  root.right = new TreeNode(3);
+  root.right.right = new TreeNode(5)
+  root.left.left = new TreeNode(4);
+  return root;
+}
+
 export function makeBinaryTree (): TreeNode {
   const root = new TreeNode(5);
   root.left = new TreeNode(4);
