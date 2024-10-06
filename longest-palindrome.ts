@@ -6,6 +6,8 @@
  * Space: O(m) where m is your character set. You have to create a map to contain all the characters
  * */
 
+import { test } from "./_test"
+
 function longestPalindrome (s: string): number {
   let len = 0;
   const keys: { [char: string]: number } = {};
@@ -18,40 +20,27 @@ function longestPalindrome (s: string): number {
   return s.length > len ? len + 1 : len
 }
 
-type TestCase = {
-  input: string,
-  expected: number
-}
-
-const testCases: TestCase[] = [
+const testCases = [
   {
-    input: 'abccccdd',
-    expected: 7,
+    input: ['abccccdd'],
+    want: 7,
   },
   {
-    input: 'a',
-    expected:  1,
+    input: ['a'],
+    want:  1,
   },
   {
-    input: 'abcd',
-    expected:  1,
+    input: ['abcd'],
+    want:  1,
   },
   {
-    input: 'aabbcd',
-    expected:  5,
+    input: ['aabbcd'],
+    want:  5,
   },
   {
-    input: 'aabbccd',
-    expected:  7,
+    input: ['aabbccd'],
+    want:  7,
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = longestPalindrome(testCase.input)
-  const want = testCase.expected
-  if(got !== want) {
-    throw new Error(`Got ${got} but wanted ${want} for test case ${i}`)
-  }
-}
-
-console.log("Passed!")
+test(testCases, longestPalindrome)
