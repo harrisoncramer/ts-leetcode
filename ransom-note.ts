@@ -1,31 +1,19 @@
 import { test } from "./_test"
 
-function ransomNote (note: string, sourceChars: string): boolean {
-  if(note.length === 0) return true
-
-  // Build a map that of char => # of occurrences
-  const charMap = new Map()
-  for(const char of note) {
-    let currentVal = charMap.get(char)
-    charMap.set(char, (currentVal || 0) + 1)
+function canConstruct (ransomeNote: string, magazine: string) {
+  let hashMap = {}
+  
+  for(const char of magazine) {
+    hashMap[char] = (hashMap[char] || 0) + 1
   }
 
-  // Iterate through all source characters. 
-  // If we find a character we need (>0 in our map), then reduce by one.
-  // If we found all our characters then return true
-  let foundChars = 0
-  for(const char of sourceChars) {
-    const remaining = charMap.get(char)
-    if (remaining > 0) {
-      charMap.set(char, charMap.get(char) - 1)
-      foundChars++
-      if (foundChars === note.length) return true
-    }
+  for(const char of ransomeNote) {
+    if(hashMap[char]) {
+      hashMap[char] = hashMap[char] - 1
+    } else return false
   }
 
-  // We've iterated through our entire source and didn't find
-  // all characters we need
-  return false
+  return true
 }
 
 const testCases = [
@@ -47,4 +35,4 @@ const testCases = [
   }
 ]
 
-test(testCases, ransomNote)
+test(testCases, canConstruct)
