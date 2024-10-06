@@ -16,6 +16,8 @@ Space Complexity: O(1)
 
 */
 
+import { test } from "./_test"
+
 function validParensNaive(s: string): boolean {
   const openToClose = {
     '[': ']',
@@ -67,64 +69,58 @@ function validParens (s: string): boolean {
 
 const testCases = [
   {
-    input: "[{()}]",
+    input: ["[{()}]"],
     want: true,
   },
   {
-    input: "[[[[]]]]",
+    input: ["[[[[]]]]"],
     want: true,
   },
   {
-    input: "",
+    input: [""],
     want: true,
   },
   {
-    input: "[[]",
+    input: ["[[]"],
     want: false,
   },
   {
-    input: "{[}]",
+    input: ["{[}]"],
     want: false,
   },
   {
-    input: "{xxa}",
+    input: ["{xxa}"],
     want: true,
   },
   {
-    input: "{()}",
+    input: ["{()}"],
     want: true,
   },
   {
-    input: "{(()}",
+    input: ["{(()}"],
     want: false,
   },
   {
-    input: "",
+    input: [""],
     want: true,
   },
   {
-    input: "aaa",
+    input: ["aaa"],
     want: true,
   },
   {
-    input: "({[{[([])]}]})",
+    input: ["({[{[([])]}]})"],
     want: true,
   },
   {
-    input: "({[x{[([]a)]b}c]})",
+    input: ["({[x{[([]a)]b}c]})"],
     want: true,
   },
   {
-    input: "({[x{[([]a)]bxc]})",
+    input: ["({[x{[([]a)]bxc]})"],
     want: false,
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = validParens(testCase.input)
-  if (got !== testCase.want) { 
-    throw new Error(`Test case ${i} failed: Got ${got} but wanted ${testCase.want}`);
-  }
-}
-
-console.log('Passed!')
+test(testCases, validParensNaive)
+test(testCases, validParens)
