@@ -7,6 +7,8 @@ Solution:
 
 */
 
+import { test } from "./_test"
+
 function isAnagram (a: string, b: string): boolean {
   if(a.length != b.length) return false
 
@@ -23,12 +25,7 @@ function isAnagram (a: string, b: string): boolean {
   return true
 }
 
-type TestCase = {
-  input: [string, string],
-  want: boolean
-}
-
-const testCases: TestCase[] = [
+const testCases = [
   {
     input: ['abc', 'bca'],
     want: true,
@@ -55,12 +52,4 @@ const testCases: TestCase[] = [
   },
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = isAnagram(...testCase.input)
-  if (got !== testCase.want) {
-    throw new Error(`Test case ${i} failed, got ${got} but wanted ${testCase.want}`)
-  }
-}
-
-console.log("Passed!")
-
+test(testCases, isAnagram)
