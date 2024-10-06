@@ -2,11 +2,14 @@
 
 Solution: Two pointers, which move until they cross. In the inner loop, WHILE a pointer encounters a non-standard character, move it repeatedly. Once you have two alphanumeric characters, compare their uppercased values. If they're different return false.
 
+Time complexity O(n)
+Space complexity O(1)
+
 */
-// Time complexity O(n)
-// Space complexity O(1)
+import { test } from "./_test"
+
 const myRegex = new RegExp(/[a-z0-9A-Z]/)
-function isPalindromeReattempt(s: string): boolean {
+function isPalindrome(s: string): boolean {
     let i = 0
     let j = s.length - 1;
     while(i < j) {
@@ -22,57 +25,47 @@ function isPalindromeReattempt(s: string): boolean {
     return true
 };
 
-type TestCase = {
-  input: string
-  want: boolean
-}
-
-const isPalindromeTestCases: TestCase[] = [
+const testCases = [
   {
-    input: 'racecar',
+    input: ['racecar'],
     want: true,
   },
   {
-    input: 'A man, a plan, a canal: Panama',
+    input: ['A man, a plan, a canal: Panama'],
     want: true,
   },
   {
-    input: 'a',
+    input: ['a'],
     want: true,
   },
   {
-    input: '',
+    input: [''],
     want: true,
   },
   {
-    input: '9se30',
-    want: false
-  },
-  {
-    input: '*)@*',
-    want: false
-  },
-  {
-    input: '*)aba@*',
-    want: true
-  },
-  {
-    input: 'aaa',
-    want: true,
-  },
-  {
-    input: 'abc',
+    input: ['9se30'],
     want: false,
   },
   {
-    input: 'racear',
+    input: ['*)@*'],
+    want: true,
+  },
+  {
+    input: ['*)aba@*'],
+    want: true,
+  },
+  {
+    input: ['aaa'],
+    want: true,
+  },
+  {
+    input: ['abc'],
     want: false,
-  }
+  },
+  {
+    input: ['racear'],
+    want: false,
+  },
 ]
 
-for (const [i, testCase] of isPalindromeTestCases.entries()) {
-  const got = isPalindromeReattempt(testCase.input)
-  if (got !== testCase.want) {
-    throw new Error(`Got ${got} but wanted ${testCase.want} for test case ${i}`)
-  }
-}
+test(testCases, isPalindrome)
