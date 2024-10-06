@@ -30,7 +30,7 @@ function ransomNote (s1: string, s2: string): boolean {
 
 const testCases = [
   {
-    input: [['banana', 'aome sbnanp aancakes']],
+    input: ['banana', 'aome sbnanp aancakes'],
     want: true
   }
 ]
