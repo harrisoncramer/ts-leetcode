@@ -1,19 +1,23 @@
-// Given an integer array nums, return all the triplets 
-// [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, 
-// and nums[i] + nums[j] + nums[k] == 0.
-// Notice that the solution set must not contain duplicate triplets.
-// Input: nums = [-1,0,1,2,-1,-4]
-// Output: [[-1,-1,2],[-1,0,1]]
+/*
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.
 
-/* The key insight here is to sort the input array, then
-* iterate through from left to right. For each i value, you
-* can do two sum on the rest of the array with the two-pointer approach
-* we used from two-sum-ii. */
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+
+Solution: The key insight here is to sort the input array, then iterate through from left to right. For each i value, you can do two sum on the rest of the array with the two-pointer approach we used from two-sum-ii.
+
+Time complexity: O(n^2)
+Space complexity: O(1)
+
+*/
+
+import { test } from "./_test"
+
 function threeSum(nums: number[]): number[][] {
   const response: number[][] = []
   nums.sort((a,b) => a - b)
   for(const [i, first] of nums.entries()) {
-    if (i > 0 && first === nums[i - 1]) continue /* If we have already processed the previous duplicate, skip this one */
+    if (i > 0 && first === nums[i - 1]) continue /* If we have already processed this number, skip the duplicate */
     let p1 = i + 1
     let p2 = nums.length - 1
     while (p1 < p2) {
@@ -33,3 +37,24 @@ function threeSum(nums: number[]): number[][] {
 
   return response
 };
+
+const testCases = [
+  {
+    input: [[-1,0,1,2,-1,-4]],
+    want: [[-1,-1,2], [-1,0,1]],
+  },
+  {
+    input: [[0,1,1]],
+    want: [],
+  },
+  {
+    input: [[-2,0,1,1,2]],
+    want: [[-2,0,2], [-2,1,1]]
+  },
+  {
+    input: [[-4, -2, -1, 0, 1, 2, 3, 4]],
+    want: [[-4, 0, 4], [-4, 1, 3], [-2, -1, 3], [-2, 0, 2], [-1, 0, 1]],
+  }
+]
+
+test(testCases, threeSum)
