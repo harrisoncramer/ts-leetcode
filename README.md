@@ -22,7 +22,7 @@ bun run add-binary.ts
 
 Each of the algorithms has a set of test cases added in a `testCases` constant. The `input` of that object is an array of arguments that will be spread and passed to the function. The `want` property is the expected result of the function.
 
-To handle cases where the `want` is a non-primitive value, it's run through `JSON.stringify()` in order to compare against the expected result.
+To handle cases where the `want` is a non-primitive value, it's run through `JSON.stringify()` in order to compare against the expected result. You can also pass `only` to isolate a particular test, and a `compare` function where the equality check is more complex.
 
 # Common Data Structures
 
