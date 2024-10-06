@@ -7,6 +7,7 @@ Space Complexity: O(1)
 */
 
 import { ListNode, makeList, makeSortedList } from "./_list";
+import { test } from "./_test";
 
 
 function reverseLinkedList (l: ListNode<number>): ListNode<number> {
@@ -23,27 +24,21 @@ function reverseLinkedList (l: ListNode<number>): ListNode<number> {
   return prev!
 }
 
-type TestCase = {
-  input: ListNode<number>,
-  want: number[]
-}
-
-const testCases: TestCase[] = [
+const testCases = [
   {
-    input: makeList(),
-    want: makeList().values().reverse()
+    input: [makeList()],
+    want: makeList().values().reverse(),
+    compare: (got: ListNode<number>, want: number[]) => {
+      return JSON.stringify(got.values()) === JSON.stringify(want)
+    }
   },
   {
-    input: makeSortedList(),
-    want: makeSortedList().values().reverse()
+    input: [makeSortedList()],
+    want: makeSortedList().values().reverse(),
+    compare: (got: ListNode<number>, want: number[]) => {
+      return JSON.stringify(got.values()) === JSON.stringify(want)
+    }
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = reverseLinkedList(testCase.input).values()
-  if (JSON.stringify(got) !== JSON.stringify(testCase.want)) {
-    throw new Error(`Test case ${i} failed: Got ${got} but wanted ${testCase.want}`);
-  }
-}
-
-console.log("Success!")
+test(testCases, reverseLinkedList)
