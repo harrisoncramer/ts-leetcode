@@ -1,21 +1,23 @@
 // Given a string s consisting of words and spaces, return the length of the last word in the string.
 // A word is a maximal substring consisting of non-space characters only.
 
-const lastWordTestCases = [
+import { test } from "./_test"
+
+const testCases = [
   {
-    input: "Hello World",
+    input: ["Hello World"],
     want: 5,
   },
   {
-    input: "fly me to the moon ",
+    input: ["fly me to the moon "],
     want: 4,
   },
   {
-    input: "a",
+    input: ["a"],
     want: 1,
   },
   {
-    input: "",
+    input: [""],
     want: 0,
   }
 ]
@@ -35,10 +37,4 @@ function lengthOfLastWord(s: string): number {
   return total
 };
 
-for (const testCase of lastWordTestCases) {
-  const got = lengthOfLastWord(testCase.input)
-  const want = testCase.want
-  if (want !== got) {
-    throw new Error(`Got ${got} but wanted ${want} for ${testCase.input}`)
-  }
-}
+test(testCases, lengthOfLastWord)
