@@ -4,39 +4,7 @@ Solution: Use a sliding window that calculates a sum as it moves through the arr
 
 */
 
-type TestCase = {
-  input: number[]
-  target: number
-  want: number
-}
-
-const testCases: TestCase[] = [
-  {
-    input: [2,3,1,2,4,3],
-    target: 7,
-    want: 2,
-  },
-  {
-    input: [2,3,1,2,4,3],
-    target: 7,
-    want: 2
-  },
-  {
-    input: [3],
-    target: 3,
-    want: 1
-  },
-  {
-    input: [],
-    target: 3,
-    want: 0,
-  },
-  {
-    input: [3,1,1,1,3,6],
-    target: 2,
-    want: 1,
-  }
-]
+import { test } from "./_test"
 
 function minLengthSubarray (nums: number[], target: number): number {
   let p1 = 0
@@ -57,9 +25,28 @@ function minLengthSubarray (nums: number[], target: number): number {
   return minLength === Infinity ? 0 : minLength
 }
 
-for (const [i, testCase] of testCases.entries()) {
-  const got = minLengthSubarray(testCase.input, testCase.target)
-  if (got !== testCase.want) {
-    throw new Error(`Test case ${i} failed: Got ${got} but wanted ${testCase.want}`);
+const testCases =  [
+  {
+    input: [[2,3,1,2,4,3], 7],
+    want: 2,
+  },
+  {
+    input: [[2,3,1,2,4,3], 7],
+    want: 2
+  },
+  {
+    input: [[3], 3],
+    want: 1
+  },
+  {
+    input: [[], 3],
+    want: 0,
+  },
+  {
+    input: [[3,1,1,1,3,6], 2],
+    want: 1,
   }
-}
+]
+
+
+test(testCases, minLengthSubarray)
