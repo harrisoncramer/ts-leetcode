@@ -9,6 +9,12 @@ E.g. for a tree with three levels, our result would have three arrays:
        4    5       7
 
 [[1], [2,3], [4,5,7]]
+
+
+Solution: Write a breadth first traversal. However, rather than just dequeuing the values from the queue one at a time, we do it in "batches" where we dequeue all of the nodes from the same level at the same time. 
+
+In order to do this, we save the initial size of our queue, and have a second loop inside of our while loop that empties out the queue. Inside of that inner loop, we remove each element from the queue and add it to a subresult, and it's children (if they exist) back into the queue. After the inner loop completes, we know our queue will have all of the children from the neext level in it. The queue will only be empty when there are no children in the next level.
+
 */
 
 import { test } from "./_test"
@@ -16,19 +22,23 @@ import { makeLargeTree, makeSplitTree, makeTree, makeUnbalancedBinaryTree, TreeN
 
 function levelOrder (root: TreeNode | null): number[][] {
   if(!root) return []
+
   const queue: TreeNode[] = [root]
   let result: number[][] = []
+
   while(queue.length) {
     let qLen = queue.length // Save # of elements we have to pop out...
     let sublist: number[] = []
-    while(qLen > 0) {
-      const n = queue.pop()!
-      if(n.val !== undefined) sublist.push(n.val)
-      if(n.left) queue.unshift(n.left)
+
+    while(qLen > 0) { 
+      const n = queue.pop()! // Pop out each element...
+      sublist.push(n.val) // Add it's value to the subresult for that level...
+      if(n.left) queue.unshift(n.left) // Add it's children to the queue, if they exist
       if(n.right) queue.unshift(n.right)
       qLen--
     }
-    result.push(sublist)
+
+    result.push(sublist) // Once the queue is empty, add our subresult to the final result
   }
 
   return result
