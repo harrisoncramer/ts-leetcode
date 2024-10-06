@@ -4,7 +4,7 @@ import { makeLargeTree, makeTree, TreeNode } from "./_tree"
 /*
 Return the maximum depth of a binary tree.
 
-Solution: Write a DFS that recursively traverses the tree until you reach a null node. At that point, you should return zero since therea are no nodes at that point. Otherwise, return the max depth between the right and left node, plus one. You add one because each time you traverse up the tree you increase your node count by one.
+Solution: Write a DFS that recursively traverses the tree until you reach a null node. At that point, you should return zero since there are no nodes at that point. Otherwise, return the max depth between the right and left node, plus one. You add one because each time you traverse up the tree you increase your node count by one.
 
 Time Complexity: O(n) where n is the number of nodes, since you have to travel the entire tree
 Space Complexity: O(h) where h is the height of the overall tree
