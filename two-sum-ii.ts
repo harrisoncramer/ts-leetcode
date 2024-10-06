@@ -6,6 +6,8 @@ Time: O(n)
 Space: O(1)
 */
 
+import { test } from "./_test"
+
 function twoSum(numbers: number[], target: number): number[] {
   let i = 0;
   let j = numbers.length - 1;
@@ -18,37 +20,19 @@ function twoSum(numbers: number[], target: number): number[] {
   throw new Error("Must be given array with solution")
 };
 
-type TestCase = {
-  input: [number[], number][]
-  want: [number, number]
-}
-
 const testCases = [
   {
-    arr: [2, 3, 7, 10, 18, 20, 39],
-    target: 28,
+    input: [[2, 3, 7, 10, 18, 20, 39], 28],
     want: [3, 4],
   },
   {
-    arr: [2, 3, 7, 10, 18, 20, 39],
-    target: 38,
+    input: [[2, 3, 7, 10, 18, 20, 39], 38],
     want: [4, 5],
   },
   {
-    arr: [3, 5, 8, 10],
-    target: 8,
+    input: [[3, 5, 8, 10], 8],
     want: [0, 1]
   }
 ]
 
-for (const [i, testCase] of testCases.entries()) {
-  let got: number[]
-  try {
-    got = twoSum(testCase.arr, testCase.target)  
-  } catch (err) {
-    throw new Error(`Test case ${i} errored!`)
-  }
-  if (JSON.stringify(testCase.want) !== JSON.stringify(got)) {
-    throw new Error(`Test case ${i} failed: Got ${got} but wanted ${testCase.want}`)
-  }
-}
+test(testCases, twoSum)
