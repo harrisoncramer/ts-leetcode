@@ -4,7 +4,9 @@ import { makeBinaryTree, TreeNode } from "./_tree";
 /*
 Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
 
-Solution: Use recursion to perform a DFS on a tree. Each time you encounter a node, subtract it's value from the target, and add it's node value to the list of paths you've already seen. When you encounter a null node, you've gone too far, just return (base case). When you encounter a leaf node (node with no left or right children), check to see if the target minus it's value is zero. If so, push the current path 
+Solution: Use recursion to perform a DFS on a tree. Each time you encounter a node, subtract it's value from the target, and add it's node value to the list of paths you've already seen. When you encounter a null node, you've gone too far, just return (base case). When you encounter a leaf node (node with no left or right children), check to see if the target minus it's value is zero. If so, add the current path.
+
+NOTE: Be careful when passing arrays down like this in Javascript that you're not modifying the parent array with .push() and are creating a new array!
 
 Time complexity: O(n) since we have to travel to all nodes when there are no valid paths
 Space complexity: O(n) due to the path storage if we travel to all nodes
