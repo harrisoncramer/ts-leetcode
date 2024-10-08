@@ -19,41 +19,20 @@ function productExceptSelfNaive (nums: number[]): number[] {
   return result
 }
 
-function productExceptSelfWithZeros(nums: number[]): number[] {
-  let zeroCount = nums.reduce((agg, v) => agg += (v === 0 ? 1 : 0), 0)
-  if(zeroCount > 1 || zeroCount === 0) {
-    let multiplier = nums.reduce((agg, c) => agg * c, 1)
-    for(let i = 0; i < nums.length; i++) {
-      if(nums[i] === 0) nums[i] = multiplier
-      else nums[i] = multiplier / nums[i]
-    }
-  } else {
-    let multiplier = nums.reduce((agg, c) => {
-      if(c === 0) return agg
-      return agg * c
-    }, 1)
-    for(let i = 0; i < nums.length; i++) {
-      if(nums[i] === 0) nums[i] = multiplier
-      else nums[i] = 0
-    }
-  }
-  return nums
-}
-
 function productExceptSelf (nums: number[]): number[] {
   const prefixArray = new Array(nums.length).fill(1)
   const postFixArray = new Array(nums.length).fill(1)
   const result: number[] = []
 
   let prefixMultiplier = 1
-  for(let i = 0; i < nums.length; i++) {
-    prefixMultiplier = prefixMultiplier * (nums[i - 1] !== undefined ? nums[i - 1] : 1)
+  for(let i = 1; i < nums.length; i++) {
+    prefixMultiplier = prefixMultiplier * nums[i - 1]
     prefixArray[i] = prefixMultiplier
   }
 
   let postfixMultiplier = 1
-  for(let i = nums.length - 1; i >= 0; i--) {
-    postfixMultiplier = postfixMultiplier * (nums[i + 1] !== undefined ? nums[i + 1] : 1)
+  for(let i = nums.length - 2; i >= 0; i--) {
+    postfixMultiplier = postfixMultiplier * nums[i + 1]
     postFixArray[i] = postfixMultiplier
   }
 
@@ -96,6 +75,5 @@ const testCases = [
   }
 ]
 
-//test(testCases, productExceptSelfNaive)
-//test(testCases, productExceptSelfWithZeros)
+test(testCases, productExceptSelfNaive)
 test(testCases, productExceptSelf)
