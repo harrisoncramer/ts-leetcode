@@ -33,7 +33,7 @@ The faster solution would be to compute a prefix and a postfix multiplier, and t
 We then iterate through them and multiply the prefixes and the postfixes together.
 
 Time Complexity: O(n)
-Space Complexity: O(2n) => O(n)
+Space Complexity: O(n)
 
 */
 
