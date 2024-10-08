@@ -7,6 +7,17 @@ Naive solution: Get the number of rotations (which is k % nums.length since a fu
 Time complexity: O(n^2)
 Space complexity: O(1)
 
+*/
+
+import { test } from "./_test"
+
+function rotateSimple(nums: number[], k: number): number[] {
+  k = k % nums.length
+  while(k--) nums.unshift(nums.pop()!);
+  return nums
+};
+
+/*
 Better solution: When rotating an array around a rotation point k, we are trying to swap the last k elements to the front of the list.
 
 [1,2,3,4,5], k = 2
@@ -27,16 +38,7 @@ If we can write an in-place reversal function, then we just have to write a func
 
 Time Complexity: O(n)
 Space Complexity: O(1)
-
 */
-
-import { test } from "./_test"
-
-function rotateSimple(nums: number[], k: number): number[] {
-  k = k % nums.length
-  while(k--) nums.unshift(nums.pop()!);
-  return nums
-};
 
 function rotateEfficient (nums: number[], k: number): number[] {
   k = k % nums.length
