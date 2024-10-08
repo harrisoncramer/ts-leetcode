@@ -33,32 +33,26 @@ The faster solution would be to compute a prefix and a postfix multiplier, and t
 We then iterate through them and multiply the prefixes and the postfixes together.
 
 Time Complexity: O(n)
-Space Complexity: O(3n) => O(n)
+Space Complexity: O(2n) => O(n)
 
 */
 
 function productExceptSelf (nums: number[]): number[] {
   const prefixArray = new Array(nums.length).fill(1) // Build arrays with "1" at each position (no-op when doing multiplication)
-  const postFixArray = new Array(nums.length).fill(1)
-  const result: number[] = []
 
   let prefixMultiplier = 1
   for(let i = 1; i < nums.length; i++) { // For the prefix array, we can start at the second value
     prefixMultiplier = prefixMultiplier * nums[i - 1] // Update the multiplier by multiplying it with the previous element
-    prefixArray[i] = prefixMultiplier // Set that result into our prefix array
+    nums[i] = prefixMultiplier // Set that result into our prefix array
   }
 
   let postfixMultiplier = 1
   for(let i = nums.length - 2; i >= 0; i--) { // For the postfix array, we can start at the second-to-last value
     postfixMultiplier = postfixMultiplier * nums[i + 1]
-    postFixArray[i] = postfixMultiplier
+    prefixArray[i] = prefixArray[i] * postfixMultiplier // Multiply each prefix multipler by the postfix multiplier to get result!
   }
 
-  for(let i = 0; i < nums.length; i++) {
-    result.push(prefixArray[i] * postFixArray[i]) // Multiply the prefix and postfix to get the total sum
-  }
-
-  return result
+  return prefixArray
 } 
 
 const testCases = [
