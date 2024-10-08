@@ -41,15 +41,15 @@ function productExceptSelf (nums: number[]): number[] {
   const prefixArray = new Array(nums.length).fill(1) // Build arrays with "1" at each position (no-op when doing multiplication)
 
   let prefixMultiplier = 1
-  for(let i = 1; i < nums.length; i++) { // For the prefix array, we can start at the second value
+  for(let i = 1; i < nums.length; i++) {              // For the prefix array, we can start at the second value
     prefixMultiplier = prefixMultiplier * nums[i - 1] // Update the multiplier by multiplying it with the previous element
-    nums[i] = prefixMultiplier // Set that result into our prefix array
+    nums[i] = prefixMultiplier                        // Set that result into our prefix array
   }
 
   let postfixMultiplier = 1
-  for(let i = nums.length - 2; i >= 0; i--) { // For the postfix array, we can start at the second-to-last value
-    postfixMultiplier = postfixMultiplier * nums[i + 1]
-    prefixArray[i] = prefixArray[i] * postfixMultiplier // Multiply each prefix multipler by the postfix multiplier to get result!
+  for(let i = nums.length - 2; i >= 0; i--) {           // For the postfix array, we can start at the second-to-last value
+    postfixMultiplier = postfixMultiplier * nums[i + 1] // Same calculation as above, except we're using +1
+    prefixArray[i] = prefixArray[i] * postfixMultiplier // prefix x postfix = result!
   }
 
   return prefixArray
