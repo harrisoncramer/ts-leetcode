@@ -26,7 +26,7 @@ We can get part way there by reversing the entire list, like so:
 
 [5,4,3,2,1]
 
-Now, we can see that 5 and 4 are in the first two positions, we just need to reverse from 0 to k, again, to get them in the right place.
+Now, we can see that 5 and 4 are in the first two positions, we just need to reverse from 0 to k - 1, so they're ordered right.
 
 [4,5,3,2,1]
 
@@ -34,7 +34,7 @@ Last, we just need to reverse from k to the end of the array to get the rest of 
 
 [4,5,1,2,3]
 
-If we can write an in-place reversal function, then we just have to write a function that calls it three times and will get an O(n) solution.
+If we can write an in-place reversal, we just have to write a function that calls it three times and will get an O(n) solution.
 
 Time Complexity: O(n)
 Space Complexity: O(1)
@@ -42,7 +42,7 @@ Space Complexity: O(1)
 
 function rotateEfficient (nums: number[], k: number): number[] {
   k = k % nums.length
-  nums.reverse()
+  inPlaceReverse(0, nums.length - 1, nums)
   inPlaceReverse(0, k - 1, nums)
   inPlaceReverse(k, nums.length -1, nums)
   return nums
