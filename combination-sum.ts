@@ -14,6 +14,9 @@ Solution: We want to build up a solution over time with recursion. The base case
 
 In our recursive function, if our current number is greater than the target, we know we can add it to our result, so add it to the path of numbers and call the recursive function with the same index. That way we'll repeatedly build up a list of numbers that can be added together but stay below the target. The second recursive call takes over by moving to the next index.
 
+Time complexity: O(2^n): Each candidate can be included or excluded, leading to an exponential number of combinations. For instance imagine your input array is [2,3,4] and the target is 100, we'd have to traverse repeatedly in the call stack to add up all those 4s or 3s, to determine an output.
+
+Space complexity: O(target / min(candidates)) since the maximum depth of the recursion is the number of times the smallest candidate can fit into the solution.
 */
 
 import { test } from "./_test"
