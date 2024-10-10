@@ -3,7 +3,7 @@ Given an array of integers nums, calculate the pivot index of this array. The pi
 
 If the index is on the left edge of the array, then the left sum is 0 because there are no elements to the left. This also applies to the right edge of the array. Return the leftmost pivot index. If no such index exists, return -1.
 
-Solution: Get the total of all elements. We know that the pivot index 
+Solution: Get the total of all elements. We know that the pivot index will occur when the left side and the right side are equal. So, iterate through our numbers, and for each one, remove it (and the aggregated left sum) from the total, to get our new right sum. If that right sum is equal to the left sum, we have a good pivot index. If not, add that value to the left sum and continue.
 
 Time complexity: O(n)
 Space complexity: O(1)
@@ -14,7 +14,6 @@ import { test } from "./_test"
 
 function pivotIndex(nums: number[]): number {
   const total = nums.reduce((agg, c) => agg + c, 0) // Get the total of all the elements 
-
   let leftSum = 0
   for(let i = 0; i < nums.length; i++) {            // Take each element...
     const rightSum = total - leftSum - nums[i];     // Calculate the right sum by removing the leftSum + current value
