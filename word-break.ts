@@ -14,33 +14,35 @@ While the word can be split apart into these words, it cannot be done in a way t
 */
 
 
-function wordBreak (s: string, wordDict: string[]): boolean {
-  function helper (s: string, i: number) {
-    if(i === s.length) return true
+function wordBreak(s: string, wordDict: string[]): boolean {
+  const dp = new Array(s.length + 1).fill(false);
+  dp[s.length] = true; // Base case: empty string can always be segmented
 
-    let k = i
-    for(const word of wordDict) {
-      let j = 0;
-      while(s[i] === word[j] && word[j]) {
-        i++
-        j++
-      }
-      if(!word[j]) {
-        if(helper(s, i)) return true
-        i -= word.length
-      } else {
-        i = k
-      }
+  for (let i = s.length - 1; i >= 0; i--) {           // Iterate backward over the string
+    for (const w of wordDict) {                       // Check each word in the dictionary
+
+      // If we slice off, starting at i until the end of the length of w, a chunk of our string, does it equal
+      // our string itself? If so, we know that from i to i+w.length can be segmented. If THIS section can be
+      // segmented, then we should also check the segment that starts right after it. For our first match,
+      // we know that w.length + i will be equal to true value we set above as our base case
+      if (s.slice(i, i + w.length) === w) dp[i] = dp[i + w.length];
+
+      // Our condition here is basically saying: Does the current word fit within the section of 
+      // the string after i? Only if so, do we run our second check, otherwise don't bother. It's an optimization
+      // if (i + w.length <= s.length && s.slice(i, i + w.length) === w) dp[i] = dp[i + w.length]; // More efficient!
+
+      if (dp[i]) break; // If already true, no need to check more words
     }
   }
 
-  return helper(s, 0) || false
+  return dp[0]; // Can the entire string be segmented?
 }
 
 const testCases = [
   {
     input: ["leetcode", ["leet", "code"]],
     want: true,
+    only: true,
   },
   {
     input: ["applepenapple", ["apple", "pen"]],
