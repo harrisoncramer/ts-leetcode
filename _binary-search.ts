@@ -7,13 +7,17 @@ These two patterns let us solve almost all binary search algorithms. To decide b
 
 The first pattern will return the minimal k element (furthest to the left) that satisfies the condition function. To build it, follow these steps:
 
-1. Set left and right to include all possible elements
-2. At the end, return the left element
-3. While left < right, check predicate. Pass the predicate the current val (or mid), left, and right.
-  If truthy, update right = mid, else update left = mid + 1. In otherwords, when truthy, slice off the end of the input
-  
+1. Use <
+2. Predicate True: right to mid 
+3. Predicate False: left to mid + 1
+4. Return left
 
 The second pattern will return the maximal k element (furthest to the right) that satisfies the condition function. To build it, follow these steps:
+
+1. Use <=
+2. True: Right to mid - 1
+3. False: Left to mid + 1
+4. Return right
 
 There is one common edge case: Since we're returning the left value, if the array is empty (left is zero and right is also zero, so we never loop), it's easier to just handle that in an initial "if" check since in most cases using zero to index an empty array is undefined.
 
