@@ -4,6 +4,14 @@ A frog is crossing a river. The river is divided into some number of units, and 
 Given a list of stones positions (in units) in sorted ascending order, determine if the frog can cross the river by landing on the last stone. Initially, the frog is on the first stone and assumes the first jump must be 1 unit.
 
 If the frog's last jump was k units, its next jump must be either k - 1, k, or k + 1 units. The frog can only jump in the forward direction.
+
+Solution: We are going to need to use a recursive solution with backtracking. This is because there are potentially multiple paths to any given stone, which will affect the value of K.
+
+We have three potential paths in our recursive functions, which are small, medium, and large steps. Our recursive function will therefore try each of those jumps to see if it can reach the next step. We know they can reach a valid step if the step exists in our set, since the steps are sorted.
+
+The successful base case of the recursive function is when the value of the current stone is equal to the value of the last stone. The unsuccessful base case is when we cannot take medium, small, or large steps (e.g. the next stone would not be in our set). If that happens, then we know we must backtrack. We return false.
+
+For each failure (cannot take large step, cannot take small step, cannot take medium step) we know that the stone we're currently on, given the step type we chose, results in a failure. We can add that to our "impossible" set because we may reach this step again during backtracking. We need to store not only the step we're on, but also the 
 */
 
 import { test } from "./_test";
@@ -14,6 +22,12 @@ function canCross(stones: number[]): boolean {
 
   const s = new Set(stones);
   const impossible = new Map<number, Set<number>>();
+
+  function addImpossibility(stone: number, step: number) {
+     const impossibilities = impossible.get(stone) || new Set()
+     impossibilities.add(step)
+     impossible.set(stone, impossibilities)
+  }
 
   function helper (currentStone: number, lastJump: number) {
 
@@ -26,21 +40,18 @@ function canCross(stones: number[]): boolean {
      let largeJump = lastJump + 1
 
      // Keep track of jumps that are impossible for the current stone
-     const impossibilities = impossible.get(currentStone) || new Set()
+     const impossibilities = impossible.get(currentStone)
 
      // Try to jump using the large jump, if it's possible. If it doesn't return true, add it to the impossibilities set
      // Do this for the other jumps too, each time updating our impossible set
-     if(s.has(currentStone + largeJump) && !impossibilities.has(largeJump) && helper(currentStone + largeJump, largeJump)) return true
-     impossibilities.add(largeJump)
-     impossible.set(currentStone, impossibilities)
+     if(s.has(currentStone + largeJump) && !impossibilities?.has(largeJump) && helper(currentStone + largeJump, largeJump)) return true
+     addImpossibility(currentStone, largeJump)
 
-     if(s.has(currentStone + mediumJump) && !impossibilities.has(mediumJump) && helper(currentStone + mediumJump, mediumJump)) return true
-     impossibilities.add(mediumJump)
-     impossible.set(currentStone, impossibilities)
+     if(s.has(currentStone + mediumJump) && !impossibilities?.has(mediumJump) && helper(currentStone + mediumJump, mediumJump)) return true
+     addImpossibility(currentStone, mediumJump)
 
-     if(smallJump > 0 && s.has(currentStone + smallJump) && !impossibilities.has(smallJump) && helper(currentStone + smallJump, smallJump)) return true
-     impossibilities.add(smallJump)
-     impossible.set(currentStone, impossibilities)
+     if(smallJump > 0 && s.has(currentStone + smallJump) && !impossibilities?.has(smallJump) && helper(currentStone + smallJump, smallJump)) return true
+     addImpossibility(currentStone, smallJump)
 
      return false
   }
