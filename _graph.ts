@@ -75,10 +75,12 @@ export class DirectedGraph {
 
 
 /* 
-For an adjacency list, we use keys where the key is the value and the value of the map is a set of values
+For an adjacency list, we use keys where the key is the value and the value of the map is a set of values.
+
+This is a self-contained example, but class might be better approach here. Good for quick graph algorithms.
 */
 export function buildAdjacencyList<T> (prerequisites: T[][]): Map<T, Set<T>> {
-  const g = new Map<T, Set<T>>()
+  const g = new Map<T, Set<T>>();
   for(const p of prerequisites) {
     const course: T = p[0]!
     const preq: T = p[1]!
@@ -91,4 +93,77 @@ export function buildAdjacencyList<T> (prerequisites: T[][]): Map<T, Set<T>> {
     }
   }
   return g
+}
+
+export class AdjacencyList<T> {
+  data: Map<T, Set<T>>
+
+  constructor () {
+    this.data = new Map()
+  }
+
+  addNode (val: T) {
+    if(this.data.has(val)) return this.data.get(val)
+    this.data.set(val, new Set())
+    return this.data.get(val)
+  }
+
+  addEdge(src: T, dst: T) {
+    const srcNode = this.data.has(src)
+    if(!srcNode) this.addNode(src)
+    const dstNode = this.data.has(dst)
+    if(!dstNode) this.addNode(dst)
+
+    const neighbors = this.data.get(src)!
+    neighbors.add(dst)
+    this.data.set(src, neighbors)
+  }
+
+  removeEdge(src: T, dst: T) {
+    const srcNode = this.data.has(src)
+    if(!srcNode) return
+    
+    const neighbors = this.data.get(src)!
+    neighbors.delete(dst)
+    this.data.set(src, neighbors)
+  }
+
+  removeNode(val: T) {
+    for(const k of this.data.keys()) {
+      const s = this.data.get(k)!
+      s.delete(val)
+      this.data.set(k, s)
+    }
+    this.data.delete(val)
+  }
+
+
+
+  hasCycle () {
+    const visiting = new Set<T>();    // Tracks nodes in the current DFS path, they'll be added/deleted on entering/backtracking
+    const visited = new Set<T>();     // Nodes we've already visited, it's an optimization technique. We've already checked this node, know it's not a cycle.
+
+    const dfs = (course: T): boolean => {
+      if (visiting.has(course)) return true;   // Cycle detected! We've already visited this node!
+      if (visited.has(course)) return false;
+      visiting.add(course);                    // Start tracking this node
+      const n = this.data.get(course);
+      if (n && n.size > 0) {
+        for (const c of n) {         // If it has neighbors, check each of them, they'll be added to the set
+          if (dfs(c)) return true;   // If any neighbor has a cycle, return true immediately. 
+                                     // No need to remove nodes from set since we are going to short-circut and return false
+        }
+      }
+
+      visiting.delete(course);  // Remove the current node from the set + backtrack, check previous value
+      visited.add(course);      // We have now visited this node and don't need to re-check it in the future!
+      return false;
+    }
+
+    for (const v of this.data.keys()) {
+      if (dfs(v)) return true; // If a cycle is detected, return false
+    }
+
+    return false;
+  }
 }

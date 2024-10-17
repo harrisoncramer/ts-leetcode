@@ -1,5 +1,5 @@
 import { test } from "./_test"
-import { buildAdjacencyList } from "./_graph"
+import { AdjacencyList } from "./_graph"
 
 /*
 Given a set of courses that are listed as [course, prerequisite], write an algorithm to determine whether it's possible to complete all of the courses.
@@ -12,32 +12,17 @@ The overall DFS algorithm should do this check first, then get all children out 
 
 */
 
-function hasCycle(_numCourses: number, prerequisites: number[][]): boolean {
-  const g = buildAdjacencyList(prerequisites);
-  const visiting = new Set<number>(); // Tracks nodes in the current DFS path, they'll be added/deleted on entering/backtracking
-  const visited = new Set<number>(); // Nodes we've already visited, it's an optimization technique
-
-  function dfs(course: number): boolean {
-    if (visiting.has(course)) return false; // Cycle detected, we've already visited this node in this course check
-    if (visited.has(course)) return true;   // We've already visited this node and know it's not a cycle, return true
-    visiting.add(course);                   // Add node to current path
-    const n = g.get(course);
-    if (n && n.size > 0) {
-      for (const c of n) {         // If it has children, check each of them, they'll be added to the set
-        if (!dfs(c)) return false; // If any child has a cycle, return false immediately. 
-                                   // No need to remove nodes from set since we are going to short-circut and return false
-      }
-    }
-    visiting.delete(course);  // Remove the current node from the set + backtrack, check previous value
-    visited.add(course);      // We have now visited this node and don't need to re-check it in the future!
-    return true;
+function hasCycle(prerequisites: number[][]): boolean {
+  const al = new AdjacencyList<number>()
+  for(const course of prerequisites) {
+    const [c, p] = course
+    al.addEdge(c, p)
   }
 
-  for (const [course] of prerequisites) {
-    if (!dfs(course)) return false; // If a cycle is detected, return false
-  }
+  if(al.hasCycle()) return false
 
-  return true;
+  return true
+
 }
 
 const testCases = [
