@@ -56,7 +56,7 @@ function canCross(stones: number[]): boolean {
      return false
   }
 
-   return helper(1, 1)
+   return helper(1, 1) // Our initial jump is one, and we must land on k = 1
 };
 
 const testCases = [
