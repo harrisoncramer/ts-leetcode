@@ -8,6 +8,8 @@ Time Complexity: You have to do O(n) operations for each character, and there ar
 Space Complexity: O(n) because you are building up a string whose maximum length is O(n).
 */
 
+import { test } from "./_test";
+
 function longestPalindromicSubstring (str: string): string {
   if(str.length === 0) return ""
 
@@ -43,42 +45,31 @@ function longestPalindromicSubstring (str: string): string {
   return result
 }
 
-type TestCase = {
-  input: string
-  want: string
-}
-const testCases: TestCase[] = [
+const testCases = [
   {
-    input: "racecar",
+    input: ["racecar"],
     want: "racecar",
   },
   {
-    input: "zracecare",
+    input: ["zracecare"],
     want: "racecar"
   },
   {
-    input: "abcdeff",
+    input: ["abcdeff"],
     want: "ff",
   },
   {
-    input: "aabc",
+    input: ["aabc"],
     want: "aa",
   },
   {
-    input: "caabb",
+    input: ["caabb"],
     want: "aa",
   },
   {
-    input: "aaab",
+    input: ["aaab"],
     want: "aaa",
   }
 ]
 
-for(const [i, testCase] of testCases.entries()) {
-  const got = longestPalindromicSubstring(testCase.input);
-  if (got !== testCase.want) {
-    throw new Error(`Got ${got} but wanted ${testCase.want} for test case ${i}`);
-  }
-}
-
-console.log("Success!")
+test(testCases, longestPalindromicSubstring)
