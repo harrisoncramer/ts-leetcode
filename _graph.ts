@@ -137,8 +137,6 @@ export class AdjacencyList<T> {
     this.data.delete(val)
   }
 
-
-
   hasCycle () {
     const visiting = new Set<T>();    // Tracks nodes in the current DFS path, they'll be added/deleted on entering/backtracking
     const visited = new Set<T>();     // Nodes we've already visited, it's an optimization technique. We've already checked this node, know it's not a cycle.
@@ -165,5 +163,28 @@ export class AdjacencyList<T> {
     }
 
     return false;
+  }
+
+  minHops(src: T, dst: T): number {
+    if (!this.data.has(src) || !this.data.has(dst)) return -1
+
+    const queue: [T, number][] = [[src, 0]]; // Queue for BFS with (node, level)
+    const visited = new Set<T>();
+    visited.add(src);
+
+    while (queue.length > 0) {
+      const [current, level] = queue.shift()!;
+      if (current === dst) return level; // Destination reached
+
+      const neighbors = this.data.get(current)!
+      for (const neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push([neighbor, level + 1]);
+        }
+      }
+    }
+
+    return -1
   }
 }
