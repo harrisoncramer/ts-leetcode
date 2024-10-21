@@ -25,7 +25,7 @@ import { test } from "./_test";
 function checkSubstring (left: number, right: number, s: string, result: string): string {
   let res = ""
   while (left >= 0 && right < s.length && s[left] === s[right]) {
-    res = s.substring(left, right + 1) // Add both left and right
+    res = s.substring(left, right + 1) // Add both left and right (right index is non-inclusive)
     left--
     right++
   }
