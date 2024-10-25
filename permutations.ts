@@ -5,6 +5,9 @@ Solution: You are essentially building up a path here. Create a recursive functi
 
 If not, iterate over each value in the nums and check to see if it's already in the path. If it's not in the path already, push it in and then call the helper function with the expanded path. At the end, make sure to pop() off the value, so that the next loop isn't affected.
 
+Time Complexity: O(n * n!) there are n! unique combinations (n - 1)(n - 2)(etc..) and copying each permutation to the result (spread) taekes n time to accomplish. This is the optimal time complexity.
+
+Space Complexity: O(n) since we will have n recurisve calls before reaching a solution.
 */
 
 import { test } from "./_test"
